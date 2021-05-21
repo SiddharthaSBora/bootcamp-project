@@ -69,15 +69,24 @@
 	
 *--> 3.1.2 click with interactions
 	logit click_true rank ///
+	      b3.insured##rank c.numberofvehicles##rank ///
+	      c.numberofdrivers##rank b2.marrystatus##rank
+
+	logit click_true rank ///
 	      b3.insured##rank numberofvehicles##rank ///
 	      numberofdrivers##rank b2.marrystatus##rank
-
+		  
+		  
 *--> 3.2 policies_sold 
 *--> 3.2.1 policies_sold without interactions
 	logit policies_sold rank ///
 		  b3.insured numberofvehicles numberofdrivers b2.marrystatus 
 
 *--> 3.2.2 policies_sold with interactions
+	logit policies_sold rank ///
+	      b3.insured##rank c.numberofvehicles##rank ///
+	      c.numberofdrivers##rank b2.marrystatus##rank
+		  
 	logit policies_sold rank ///
 	      b3.insured##rank numberofvehicles##rank ///
 	      numberofdrivers##rank b2.marrystatus##rank

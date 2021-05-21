@@ -1,14 +1,29 @@
 ## Comments
     - Some preliminary evidence of dependence between observable characteristics and rank, indicative of other companies bidding differently for ad placement based on observable (or unobservable) characteristics
+    
+    
 ## Questions
     - Categorizing different groups of people based on outcome combinations (click/buy, click/nobuy, noclick/nobuy)
     - Can we change bids by dollar values for different groupings of people to reallocate advertising budget more efficiently?
     - Should we focus on click rates versus buy rates, given our lack of information or control of policy terms?
+    - Can we just focus on groups (no click, no buy; click (rank 2-5), no buy)? As for groups who click and buy, we could just ignore them. For group who click on high rank (no.1) ad but don't buy, no need to waste money. My original thought is that we could just exclude these samples from our dataset and focus on the rest of groups. But that means we do the analysis for click and buy together.  
+    - find out the important groups and increase or decrease ad expense on these groups. importance is defined as click rate within each rank? (is it what you mean in the meeting?
+    - assume you have 100 dollars, how to assign these amount of money to dif groups effectively? then go back to the original question, the criteria for identification of different groups? 
+    - What is the way to cluster different groups? By rank? Or by click-buy, click-nobuy (click:rank1-nobuy and click:rank2-5-nobuy), noclick-nobuy? 
+    
 ## Descriptive Statistics
-    - Click rates by ranks
+    - Click rates by ranks; propensity of click among different rank groups 
     - By rank and click --> summary statistics, distributions of observables
     - Identifying Groups:
         * Independent of rank --> click rates by observable characteristics (e.g. decision trees). Consistent groupings across different ranks
         * Conditional on rank --> groups of people within ranks (decision trees for click rates within ranks). Inconsistent groupings across ranks. 
         * Independent of click rates --> Identify different groups of customers without noting click rates; examine each groups click rate responsiveness to rank
+
+
+## Analysis part 
+    - decision tree within each rank (only focus on the click variable, so the outcome would be a classification tree for click for each rank)
+    - 
         
+        
+## next time for meeting 
+    - Monday, 11:00 am 

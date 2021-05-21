@@ -1,0 +1,14 @@
+## Comments
+    - Some preliminary evidence of dependence between observable characteristics and rank, indicative of other companies bidding differently for ad placement based on observable (or unobservable) characteristics
+## Questions
+    - Categorizing different groups of people based on outcome combinations (click/buy, click/nobuy, noclick/nobuy)
+    - Can we change bids by dollar values for different groupings of people to reallocate advertising budget more efficiently?
+    - Should we focus on click rates versus buy rates, given our lack of information or control of policy terms?
+## Descriptive Statistics
+    - Click rates by ranks
+    - By rank and click --> summary statistics, distributions of observables
+    - Identifying Groups:
+        * Independent of rank --> click rates by observable characteristics (e.g. decision trees). Consistent groupings across different ranks
+        * Conditional on rank --> groups of people within ranks (decision trees for click rates within ranks). Inconsistent groupings across ranks. 
+        * Independent of click rates --> Identify different groups of customers without noting click rates; examine each groups click rate responsiveness to rank
+        

@@ -30,6 +30,7 @@
 ## Analysis part 
     - decision tree within each rank (only focus on the click variable, so the outcome would be a classification tree for click for each rank)
     - CTR ? to see if we could use their approach 
+    link for CTR : https://github.com/shiyueamy/Ads-CTR-Prediction
         
         
 ## next time for meeting 

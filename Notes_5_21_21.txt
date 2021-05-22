@@ -10,7 +10,7 @@
     5 quesion 1-4 are all categorizing question, so I make a little summary
        - categorize groups, three ways 
           - click-buy,click-nobuy,noclick-nobuy
-          - click-buy,click:rank1-nobuy,click:rank2-5-nobuy,noclick-nobuy
+          - click-buy,click:rank1-nobuy,click:rank2-5-nobuy, noclick-nobuy
           - by rank, rank 1, rank 2, rank 3, rank 4, rank 5
           - more? 
     6 Can we change bids by dollar values for different groupings of people to reallocate advertising budget more efficiently? assume you have 100 dollars, how to assign these amount of money to dif groups efficiently? then go back to the original question, the criteria for identification of important groups?

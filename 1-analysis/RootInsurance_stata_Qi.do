@@ -88,25 +88,32 @@
 *--> 2.1 
 	
 		
-	
 			
 	
 *--> 2.2 Across click_nobuy, click_buy and noclick_nobuy
 		
-	local x "rank insured_N insured_Y insured_Un married numberofvehicles numberofdrivers"	
-	tabstat `x', save ///
+	local x "rank insured_N insured_Y insured_Un married single numberofvehicles numberofdrivers"	
+	local k = 1
+	foreach i of varlist `x'{
+		tabstat `i', save ///
 			by(class1) stat(mean p50 sd min max) format(%6.3f)
-	tabstatmat A2		
-	mat list A2, format(%6.3f)		
-			
+			tabstatmat A`k'
+			mat list A`k', format(%6.3f)		
+			local k = `k' + 1
+	}
 		
+			
 *--> 2.3 Across click_nobuy, click_buy and noclick_nobuy
-	local x "rank insured_N insured_Y insured_Un married numberofvehicles numberofdrivers"	
-	tabstat `x', save ///
+	local x "rank insured_N insured_Y insured_Un married single numberofvehicles numberofdrivers"	
+	local k = 1
+	foreach i of varlist `x'{
+		tabstat `i', save ///
 			by(class2) stat(mean p50 sd min max) format(%6.3f)
-	tabstatmat A3		
-	mat list A3, format(%6.3f)	
-
+			tabstatmat B`k'
+			mat list B`k', format(%6.3f)		
+			local k = `k' + 1
+	}
+		
 	
 *===============================================================================
 *-> 3. Logit regression

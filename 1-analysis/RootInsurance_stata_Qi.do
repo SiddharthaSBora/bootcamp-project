@@ -47,16 +47,66 @@
 		  marrystatus married single ///
 		  numberofvehicles numberofdrivers ///
 		  rank bid
+
+*--> generate click variables 
+
+	gen click_nobuy = 1 if click_true == 1 & policies_sold == 0 
+	replace click_nobuy = 0 if click_nobuy == .
+	gen click_buy = 2 if click_true == 1 & policies_sold == 1 
+	replace click_buy = 0 if click_buy == .
+	gen noclick_nobuy = 3 if click_true == 0 & policies_sold == 0 
+	replace noclick_nobuy = 0 if noclick_nobuy == .
+	
+	gen class1 = click_nobuy + click_buy + noclick_nobuy
+	
+	replace click_buy = 1 if click_buy == 2
+	replace noclick_nobuy = 1 if noclick_nobuy == 3
+	
+*--> generate click * rank variables
+
+	local click "click_nobuy click_buy	noclick_nobuy"
+	local k = 0 
+	foreach i of varlist `click'{
+		forval j = 1/5{    // di: display
+			gen `i'_r`j' =  5 * `k' + `j' if `i' == 1 & rank == `j'
+			replace `i'_r`j' = 0 if `i'_r`j' == .
+		}
+		local k = `k' + 1 
+	}
+
+	local click "*_r*"
+	gen class2 = 0
+	foreach i of varlist `click'{
+		replace class2 = class2 + `i'
+	}
 	
 	
 *===============================================================================
 *-> 2. Descriptive statistics
 *===============================================================================
+
+*--> 2.1 
 	
-	sum _all
-	pwcorr _all
+		
 	
-	tabulate click_true rank 
+			
+	
+*--> 2.2 Across click_nobuy, click_buy and noclick_nobuy
+		
+	local x "rank insured_N insured_Y insured_Un married numberofvehicles numberofdrivers"	
+	tabstat `x', save ///
+			by(class1) stat(mean p50 sd min max) format(%6.3f)
+	tabstatmat A2		
+	mat list A2, format(%6.3f)		
+			
+		
+*--> 2.3 Across click_nobuy, click_buy and noclick_nobuy
+	local x "rank insured_N insured_Y insured_Un married numberofvehicles numberofdrivers"	
+	tabstat `x', save ///
+			by(class2) stat(mean p50 sd min max) format(%6.3f)
+	tabstatmat A3		
+	mat list A3, format(%6.3f)	
+
 	
 *===============================================================================
 *-> 3. Logit regression

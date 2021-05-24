@@ -35,3 +35,8 @@
         
 ## next time for meeting 
     - Monday, 11:00 am 
+    
+    
+##### Follow up notes
+    - 24 unique combinations of observable characteristics; not all unique combinations observed for all ranks.
+    - Group sizes range from ~600 to ~200

@@ -166,11 +166,11 @@
 	gen validation_error = .
 	gen iter1 = .
 	local j = 0
-	local x "rank insured_N insured_Y married numberofvehicles numberofdrivers"	
+	local x "insured_N insured_Y married numberofvehicles numberofdrivers"	
 	
 	forvalues i = 10(5)500{
 		local j = `j' + 1
-		rforest class1 `x' in 1/7000, ///
+		rforest class2 `x' in 1/7000, ///
 					type(class) iter(`i') numvars(1)
 		replace iter1 = `i' in `j'
 		replace out_of_bag_error1 = `e(OOB_Error)' in `j'
@@ -178,15 +178,15 @@
 		replace validation_error = `e(error_rate)' in `j'
 		drop p
 }
-  
+  tw scatter out_of_bag_error1 iter1
 	gen oob_error = .
 	gen nvars = .
 	gen val_error = .
 	local j = 0
-	local x "rank insured_N insured_Y married numberofvehicles numberofdrivers"	
+	local x "insured_N insured_Y married numberofvehicles numberofdrivers"	
 	forvalues i = 1(1)6{
 		local j = `j' + 1
-		rforest class1 `x' in 1/7000, ///
+		rforest class2 `x' in 1/7000, ///
 					type(class) iter(500) numvars(`i')
 		replace nvars = `i' in `j'
 		replace oob_error = `e(OOB_Error)' in `j'

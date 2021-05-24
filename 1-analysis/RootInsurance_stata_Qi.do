@@ -85,9 +85,11 @@
 *-> 2. Descriptive statistics
 *===============================================================================
 
-*--> 2.1 
-	
-		
+*--> 2.1 check the variable's distribution
+	local x "rank insured_N insured_Y insured_Un married single numberofvehicles numberofdrivers"
+	foreach i of varlist `x'{
+		tabulate `i' 
+	}
 			
 	
 *--> 2.2 Across click_nobuy, click_buy and noclick_nobuy
@@ -147,4 +149,50 @@
 	logit policies_sold rank ///
 	      b3.insured##rank numberofvehicles##rank ///
 	      numberofdrivers##rank b2.marrystatus##rank
-		  
+
+*===============================================================================
+*-> 4. Classification
+*===============================================================================
+
+*--> 4.1 Decision Tree
+	
+
+*--> 4.2 Random forest 
+	set seed 2021
+	gen u = uniform()
+	sort u
+	
+	gen out_of_bag_error1 = .
+	gen validation_error = .
+	gen iter1 = .
+	local j = 0
+	local x "rank insured_N insured_Y married numberofvehicles numberofdrivers"	
+	
+	forvalues i = 10(5)500{
+		local j = `j' + 1
+		rforest class1 `x' in 1/7000, ///
+					type(class) iter(`i') numvars(1)
+		replace iter1 = `i' in `j'
+		replace out_of_bag_error1 = `e(OOB_Error)' in `j'
+		predict p in 7001/10000
+		replace validation_error = `e(error_rate)' in `j'
+		drop p
+}
+  
+	gen oob_error = .
+	gen nvars = .
+	gen val_error = .
+	local j = 0
+	local x "rank insured_N insured_Y married numberofvehicles numberofdrivers"	
+	forvalues i = 1(1)6{
+		local j = `j' + 1
+		rforest class1 `x' in 1/7000, ///
+					type(class) iter(500) numvars(`i')
+		replace nvars = `i' in `j'
+		replace oob_error = `e(OOB_Error)' in `j'
+		predict p in 7001/10000
+		replace val_error = `e(error_rate)' in `j'
+		drop p
+}
+	
+

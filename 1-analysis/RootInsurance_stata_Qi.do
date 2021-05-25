@@ -149,6 +149,24 @@
 	logit policies_sold rank ///
 	      b3.insured##rank numberofvehicles##rank ///
 	      numberofdrivers##rank b2.marrystatus##rank
+		  
+*--> 3.3 Multivariate logit
+* Explanation of bivariate logit/probit model: 
+* When we are trying to estimate binary discrete choice models with two outcome variables 
+* If these two outcome variables are independent with each other. Then we could model two logit/probit models sperately.
+* However, sometimes these two outcome variables are correlated with each other.
+* for example, 
+* Individual decision whether to work or not and whether to have children or not.
+* Farmer decision of whether to use marketing contracts or not and whether to use environmental contracts or not.
+* So the bivariate models estimates decisions that are interrelated as opposed to independent.	
+* In our case, we suspect that click and policy sold are two outcome variables that are highly correlated with each other. 
+* So a bivariate logit/probit is appropriate. 
+* Note: If we have more than two outcome variables that are correlated with each other, then multivariate logit/probit would be better.
+
+*--> 3.3.1 Without interactions
+    local x "rank insured_N insured_Y married numberofvehicles numberofdrivers"
+	mvprobit (click_true=`x') (policies_sold=`x'), dr(100)
+	
 
 *===============================================================================
 *-> 4. Classification

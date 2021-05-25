@@ -38,6 +38,10 @@
 	encode maritalstatus, gen(marrystatus)
 	encode click, gen(click_t)
 	
+	tabulate rank, gen(r)
+	tabulate numberofvehicles, gen(vehicle)
+	tabulate numberofdrivers, gen(driver)
+	
 	drop currentlyinsured maritalstatus click
 	
 	rename click_t click 
@@ -123,41 +127,198 @@
 
 *--> 3.1 click 
 *--> 3.1.1 click without interactions
+
+*>>>>>
+* this one treats rank, numberofvehicles, numberofdrivers as continuous variables
+*>>>>>
 	logit click_true rank ///
 		  b3.insured numberofvehicles numberofdrivers b2.marrystatus 
-	
-*--> 3.1.2 click with interactions
+*>>>>>		  
+* this one treats rank as discrete while numberofvehicles, numberofdrivers as continuous variables
+*>>>>>
+	logit click_true b1.rank ///
+		  b3.insured numberofvehicles numberofdrivers b2.marrystatus
+*>>>>>		  
+* this one treats rank as continuous while numberofvehicles, numberofdrivers as discrete variables
+*>>>>>
 	logit click_true rank ///
+		  b3.insured b1.numberofvehicles b1.numberofdrivers b2.marrystatus 
+*>>>>>	
+* this one treats rank, numberofvehicles, numberofdrivers as discrete variables
+*>>>>>
+	logit click_true b1.rank ///
+		  b3.insured b1.numberofvehicles b1.numberofdrivers b2.marrystatus 	  
+
+		  	
+*--> 3.1.2 click with interactions
+
+*>>>>>
+* this one treats rank, numberofvehicles, numberofdrivers as continuous variables
+*>>>>>
+	logit click_true c.rank ///
+	      b3.insured##rank c.numberofvehicles##rank ///
+	      c.numberofdrivers##rank b2.marrystatus##rank   
+
+*>>>>>		  
+* this one treats rank as discrete while numberofvehicles, numberofdrivers as continuous variables
+*>>>>>
+	logit click_true i.rank ///
 	      b3.insured##rank c.numberofvehicles##rank ///
 	      c.numberofdrivers##rank b2.marrystatus##rank
 
-	logit click_true rank ///
-	      b3.insured##rank numberofvehicles##rank ///
-	      numberofdrivers##rank b2.marrystatus##rank
-		  
+*>>>>>
+* this one treats rank as continuous while numberofvehicles, numberofdrivers as discrete variables
+*>>>>>
+	logit click_true c.rank ///
+	      b3.insured##c.rank i.numberofvehicles##c.rank ///
+	      i.numberofdrivers##c.rank b2.marrystatus##c.rank   
+
+*>>>>>
+* this one treats rank, numberofvehicles, numberofdrivers as discrete variables
+*>>>>>
+	logit click_true i.rank ///
+	      b3.insured##i.rank i.numberofvehicles##i.rank ///
+	      i.numberofdrivers##i.rank b2.marrystatus##i.rank  
 		  
 *--> 3.2 policies_sold 
 *--> 3.2.1 policies_sold without interactions
+
+*>>>>>
+* this one treats rank, numberofvehicles, numberofdrivers as continuous variables
+*>>>>>
 	logit policies_sold rank ///
 		  b3.insured numberofvehicles numberofdrivers b2.marrystatus 
 
-*--> 3.2.2 policies_sold with interactions
+*>>>>>
+* this one treats rank as discrete while numberofvehicles, numberofdrivers as continuous variables
+*>>>>>
+	logit policies_sold b1.rank ///
+		  b3.insured numberofvehicles numberofdrivers b2.marrystatus
+
+*>>>>>
+* this one treats rank as continuous while numberofvehicles, numberofdrivers as discrete variables
+*>>>>>
 	logit policies_sold rank ///
+		  b3.insured b1.numberofvehicles b1.numberofdrivers b2.marrystatus 
+*>>>>>	
+* this one treats rank, numberofvehicles, numberofdrivers as discrete variables
+*>>>>>
+	logit policies_sold b1.rank ///
+		  b3.insured b1.numberofvehicles b1.numberofdrivers b2.marrystatus 	  
+
+*--> 3.2.2 policies_sold with interactions
+*>>>>>
+* this one treats rank, numberofvehicles, numberofdrivers as continuous variables
+*>>>>>
+	logit policies_sold c.rank ///
+	      b3.insured##rank c.numberofvehicles##rank ///
+	      c.numberofdrivers##rank b2.marrystatus##rank   
+*>>>>>
+* this one treats rank as discrete while numberofvehicles, numberofdrivers as continuous variables
+*>>>>>
+	logit policies_sold i.rank ///
 	      b3.insured##rank c.numberofvehicles##rank ///
 	      c.numberofdrivers##rank b2.marrystatus##rank
+*>>>>>		  
+* this one treats rank as continuous while numberofvehicles, numberofdrivers as discrete variables
+*>>>>>
+	logit policies_sold c.rank ///
+	      b3.insured##c.rank i.numberofvehicles##c.rank ///
+	      i.numberofdrivers##c.rank b2.marrystatus##c.rank   
+*>>>>>		  
+* this one treats rank, numberofvehicles, numberofdrivers as discrete variables
+*>>>>>
+	logit policies_sold i.rank ///
+	      b3.insured##i.rank i.numberofvehicles##i.rank ///
+	      i.numberofdrivers##i.rank b2.marrystatus##i.rank  
 		  
-	logit policies_sold rank ///
-	      b3.insured##rank numberofvehicles##rank ///
-	      numberofdrivers##rank b2.marrystatus##rank
+*--> 3.3 Multivariate logit
 
+
+*>>>>>
+* Explanation of bivariate logit/probit model: 
+* When we are trying to estimate binary discrete choice models with two outcome variables 
+* If these two outcome variables are independent with each other. Then we could model two logit/probit models sperately.
+* However, sometimes these two outcome variables are correlated with each other.
+* for example, 
+* Individual decision whether to work or not and whether to have children or not.
+* Farmer decision of whether to use marketing contracts or not and whether to use environmental contracts or not.
+* So the bivariate models estimates decisions that are interrelated as opposed to independent.	
+* In our case, we suspect that click and policy sold are two outcome variables that are highly correlated with each other. 
+* So a bivariate logit/probit is appropriate. 
+* Note: If we have more than two outcome variables that are correlated with each other, then multivariate logit/probit would be better.
+*>>>>>
+
+
+*--> 3.3.1 Without interactions
+*>>>>>
+* this one treats rank, numberofvehicles, numberofdrivers as continuous variables
+*>>>>>
+    local x "rank insured_N insured_Y married numberofvehicles numberofdrivers"
+	mvprobit (click_true = `x') (policies_sold = `x'), dr(100)
+
+*>>>>>
+* this one treats rank as discrete while numberofvehicles, numberofdrivers as continuous variables
+*>>>>>
+	local x "r2-r5 insured_N insured_Y married numberofvehicles numberofdrivers"
+	mvprobit (click_true = `x') (policies_sold = `x'), dr(100)
+
+*>>>>>
+* this one treats rank as continuous while numberofvehicles, numberofdrivers as discrete variables
+*>>>>>
+    local x "rank insured_N insured_Y married vehicle2-3 driver2-3"
+	mvprobit (click_true = `x') (policies_sold = `x'), dr(100)
+
+*>>>>>
+* this one treats rank, numberofvehicles, numberofdrivers as discrete variables
+*>>>>>
+    local x "r2-r5 insured_N insured_Y married vehicle2-3 driver2-3"
+	mvprobit (click_true = `x') (policies_sold = `x'), dr(100)
+	
+	
+*--> 3.3.2 With interactions
+
+*>>>>>
+* I will only treat rank, numberofvehicles, numberofdrivers as continuous 
+* since the # of interactions will increase a lot. 
+* if necessary, i will do it later. 
+*>>>>>
+
+*>>>>>
+* the command bivariate in Stata doesn't support factor variables.
+* thus, I have to create the interaction terms by hand. 
+*>>>>>
+	gen insuerd_N_rank = insured_N * rank
+	gen insured_Y_rank = insured_Y * rank
+	gen married_rank = married * rank
+	gen driver_rank = numberofdrivers * rank
+	gen vehicle_rank = numberofvehicles * rank
+	
+	local x1 "rank insured_N insured_Y married numberofdrivers numberofvehicles"
+	local x2 "insuerd_N_rank insured_Y_rank married_rank driver_rank vehicle_rank"
+	mvprobit (click_true = `x1' `x2') (policies_sold = `x1' `x2'), dr(100)
+
+
+*--> 3.4 Nested logit or multinomial logit or conditional logit
+*>>>>>
+* All of the variables we have are observations-specific variables, meaning that
+* there is only variation in demographics across observations.
+* But when we are doing multinomial/nested logit/conditional model, we need alternative-specific 
+* variables to estimate. To be more specific, when one observation/insurance buyer 
+* decides to click or not, there is no variation in his/her demographics and ranks.
+* From my perspective, simple interacting with rank would be enough.
+* Any thoughts on this?
+*>>>>>
+
+	
 *===============================================================================
 *-> 4. Classification
 *===============================================================================
 
-*--> 4.1 Decision Tree
+* I don't think we need classification so far. But the code below is random forest
+* that I tried. Feel free to run and get some conclusions from it. 
 	
-
-*--> 4.2 Random forest 
+*--> 4.1 Random forest 
 	set seed 2021
 	gen u = uniform()
 	sort u

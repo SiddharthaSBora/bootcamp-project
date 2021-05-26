@@ -13,3 +13,6 @@
         - Multinomial Logit (Nested Logit) (policies_sold = 1/click = 1, policies_sold = 0/click = 1, click = 0)
         - Decision Tree/Random Forest (policies_sold)
     * Predicting sale probabilities and Identifying "movable" groups
+    
+    
+    

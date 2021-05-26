@@ -1,0 +1,48 @@
+### tree results 
+outcome: click 
+
+whole sample (with rank): AUC =0.67, rank and married are significant 
+
+whole sample (without rank): AUC = 0.5 
+
+rank 1: AUC = 0.54, being whether insured or not are relevent 
+
+rank 2: AUC =0.5
+
+rank 3: AUC =0.5 
+
+rank 4: AUC =0.5 
+
+RANK 5: AUC =0.5 
+
+
+outcome: policies sold 
+
+whole sample (with rank): not significant
+
+whole sample (without rank): not significant 
+
+rank 1: AUC = 0.5
+
+rank 2: AUC =0.5
+
+rank 3: AUC =0.5 
+
+rank 4: AUC =0.5 
+
+RANK 5: AUC =0.5 
+
+
+
+
+
+
+x1: insured_unknow 
+x2: insured_N
+x3: insured_Y
+x4: married 
+x5: veh1 
+x6: veh2
+x7: veh3
+x8: dri1 
+x9: dri2

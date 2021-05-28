@@ -1,0 +1,15 @@
+### Meeting Notes
+    * Price per group-sale (e.g. price per click x clicks per sale)
+
+### Schedule
+    * Categorizing and analyzing the problem; Descriptivate statistics
+        - Click and sale probabilities across rank, groups
+        - Categorizing policies sold --> costs per policies sold across different groups
+    * Defending focus on policies_sold
+        - Within rank, only significant predictor from tree approach --> number of drivers
+        - Q: How to incorporate that into our model?
+    * Model specificiation and selection
+        - Logistic Regression (policies_sold)
+        - Multinomial Logit (Nested Logit) (policies_sold = 1/click = 1, policies_sold = 0/click = 1, click = 0)
+        - Decision Tree/Random Forest (policies_sold)
+    * Predicting sale probabilities and Identifying "movable" groups

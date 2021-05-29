@@ -1,5 +1,10 @@
 # Root Insurance - Erdos Data Bootcamp Project
 
+## Group member
+- Brian Cultice 
+- Siddhartha Bora
+- Qi Jiang 
+- Xiaoliu Xu 
 
 ## Background
 - “Impressions” of ads are shown to potential customers in vertical search websites.
@@ -11,9 +16,10 @@
 ## Objective
 - Suggest an optimal bid strategy for Root Insurance Company in the Vertical Search channel.
 
+## Data
+- Provided by Root Insurane Company
+
 ## Method
 - Descriptive analysis
 - Decision tree
 - Logit regression
-
-
